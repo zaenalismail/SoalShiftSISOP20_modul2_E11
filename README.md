@@ -187,3 +187,14 @@ Kondisi - kondisi yang mungkin untuk menjalankan program
     }
   }
 ```
+### Soal 2
+
+**Deskripsi**
+
+**Penjelasan Script**
+
+### Soal 3
+
+**Deskripsi**
+
+**Penjelasan Script**
