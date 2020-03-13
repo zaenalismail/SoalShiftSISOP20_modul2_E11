@@ -130,7 +130,7 @@ Menyimpan waktu untuk menjalankan daemon dalam variable yang nantinya akan dibua
   currm = now_tm->tm_min;
   currs = now_tm->tm_sec;
 ```
-Kondisi - kondisi yang mungkin untuk menjalankan program
+Kondisi - kondisi yang mungkin untuk menjalankan program, sebagai contoh jika * 34 7, maka program akan berjalan setiap detik pada jam 7.34. Diberi kondisi jika ```currh``` atau jam realtime sama dengan hour / 7 dan ```currm``` atau menit realtime sama dengan min / 34, maka diberi sleep(1) yang artinya program akan berjalan tiap 1 detik
 ```
   if(sec=='*'&&min!='*'&&hour!='*'){
     while (hour==currh && min==currm) {
