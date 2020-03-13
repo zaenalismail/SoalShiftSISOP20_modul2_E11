@@ -76,17 +76,21 @@ int main() {
   }
 }
 ```
+
 Eksepsi ketika argumen tidak sesuai
+
 ```
 if(argc>=4){
       printf("Error\n");
       return 0;
     }
 ```
-Menyimpan tiap argumen dalam variable
+
+Menyimpan tiap argumen dalam variable, karena argumen yang dimasukkan adalah detik / menit / jam yang merupakan angka, maka diberi fungsi ```atoi```
+
 ```
 char min, sec, hour;
-  char *cmd[] = {"bash", argv[4], NULL};
+char *cmd[] = {"bash", argv[4], NULL};
     if(atoi(argv[1])<0 || atoi(argv[1])>59 || argv[1] != "\\*"){
       printf("Error\n");
       return 0;
@@ -118,7 +122,9 @@ char min, sec, hour;
       hour = atoi(argv[3]);
     }
 ```
-Menyimpan waktu untuk menjalankan daemon dalam variable yang nantinya akan dibuat kondisi kapan program akan dijalankan
+
+Menyimpan waktu realtime dalam variabel dan membuat kondisi seperti crontab untuk menjalankan daemon
+
 ```
   time_t now;
   struct tm *now_tm;
@@ -130,7 +136,9 @@ Menyimpan waktu untuk menjalankan daemon dalam variable yang nantinya akan dibua
   currm = now_tm->tm_min;
   currs = now_tm->tm_sec;
 ```
+
 Kondisi - kondisi yang mungkin untuk menjalankan program, sebagai contoh jika * 34 7, maka program akan berjalan setiap detik pada jam 7.34. Diberi kondisi jika ```currh``` atau jam realtime sama dengan hour / 7 dan ```currm``` atau menit realtime sama dengan min / 34, maka diberi sleep(1) yang artinya program akan berjalan tiap 1 detik
+
 ```
   if(sec=='*'&&min!='*'&&hour!='*'){
     while (hour==currh && min==currm) {
@@ -193,7 +201,28 @@ Kondisi - kondisi yang mungkin untuk menjalankan program, sebagai contoh jika * 
 
 **Deskripsi**
 
+Membuat sebuah folder khusus berisi sebuah program C yang per 30 detik membuat sebuah folder dengan nama timestamp [YYYY-mm-dd_HH:ii:ss].
+
+**b.** Tiap-tiap folder lalu diisi dengan 20 gambar yang di download dari https://picsum.photos/, dimana tiap gambar di download setiap 5 detik. Tiap gambar berbentuk persegi dengan ukuran (t%1000)+100 piksel dimana t adalah detik Epoch Unix. Gambar tersebut diberi nama dengan format timestamp [YYYY-mm-dd_HH:ii:ss].
+
+**c.** Agar rapi, setelah sebuah folder telah terisi oleh 20 gambar, folder akan di zip dan folder akan di delete(sehingga hanya menyisakan .zip).
+
+**d.** Karena takut program tersebut lepas kendali, Kiwa ingin program tersebut men-generate sebuah program "killer" yang siap di run(executable) untuk menterminasi semua operasi program tersebut. Setelah di run, program yang
+menterminasi ini lalu akan mendelete dirinya sendiri.
+
+**e.** Kiwa menambahkan bahwa program utama bisa dirun dalam dua mode, yaitu MODE_A dan MODE_B. untuk mengaktifkan MODE_A, program harus dijalankan dengan argumen -a. Untuk MODE_B, program harus dijalankan dengan argumen -b. Ketika dijalankan dalam MODE_A, program utama akan langsung menghentikan semua operasinya ketika program killer dijalankan. Untuk MODE_B, ketika program killer dijalankan, program utama akan berhenti tapi membiarkan proses di setiap folder yang masih berjalan sampai selesai(semua folder terisi gambar, terzip lalu di delete).
+
+Catatan:
+- Tidak boleh memakai system().
+- Program utama harus ter-detach dari terminal
+Hint:
+- Gunakan fitur picsum.photos untuk mendapatkan gambar dengan ukuran
+tertentu
+- Epoch Unix bisa didapatkan dari time()
+
 **Penjelasan Script**
+
+
 
 ### Soal 3
 
